@@ -13,7 +13,7 @@ describe('Auth Test', () => {
     })
 
     it('should make sure admin.auth().verifyIdToken() is called', () => {
-        let tokenId = 'blkjaoudasdf'
+        let tokenId = 'blkjaoudasdf' 
         let call = auth.getVerifiedUid(tokenId)
         expect(mockFbAdmin.verifyIdToken).toHaveBeenCalledWith(tokenId); 
         
@@ -25,11 +25,14 @@ describe('Auth Test', () => {
         let decodedUID = "iuawlkjnasdfk"
         mockFbAdmin.verifyIdToken.and.returnValue(Promise.resolve({uid:decodedUID}))
 
-        let tokenId = 'blkjaoudasdf'
+        let tokenId = 'blkjaoudasdf'         
         let call = auth.getVerifiedUid(tokenId)
        
         call.then(res=>{
             expect(res).toEqual(decodedUID)
+            done();
+        }).catch(err=>{
+            console.log(`err cassll`+err);  
             done();
         })
       
@@ -38,14 +41,15 @@ describe('Auth Test', () => {
 
     });
 
-    it('should catch the rejection', (done) => {
+    it('should catch the rejection', (done) => {     
         
-        mockFbAdmin.verifyIdToken.and.returnValue(Promise.reject())
+        mockFbAdmin.verifyIdToken.and.returnValue(Promise.reject('rejected'))
 
-        let tokenId = 'blkjaoudasdf'
+        let tokenId = 'blkjaoudasdf'            
         let call = auth.getVerifiedUid(tokenId)
         call.catch(err=>{
-            expect(err).toEqual('verifyIdToken Error')
+            console.log(`err`+err);  
+            expect(err).toEqual('rejected') 
             done();
         })
         expect(mockFbAdmin.verifyIdToken).toHaveBeenCalledWith(tokenId);

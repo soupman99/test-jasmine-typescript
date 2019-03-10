@@ -12,6 +12,6 @@ export const getVerifiedUid = (idToken) => {
         .then((decodedToken)=> {
             return Promise.resolve(decodedToken.uid)
         }).catch( (error) =>{
-            return Promise.reject("verifyIdToken Error")
+            return Promise.reject(error)
         });
 }

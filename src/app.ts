@@ -1,4 +1,4 @@
-import * as auth from './auth'
+let auth = require("./auth");
 
 export const checkAuthorization = ()=>{
    return auth.isAuthorized()
